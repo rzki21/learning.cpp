@@ -1,0 +1,149 @@
+```c
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//
+const int TO_DO = 5;
+
+bool IsNullTodos(string todoList[])
+{
+    bool isNull = true;
+    // check semua value apakah kosong
+
+    for (int i = 0; i <= (TO_DO - 1); i++)
+    {
+        if (todoList[i] != "")
+        {
+            isNull = false;
+            break;
+        }
+    }
+
+    return isNull;
+}
+
+int hapusTugas(string todoList[], int deleteIndex)
+{
+    int getArrayLength = sizeof(todoList) / sizeof(int);
+
+    if (IsNullTodos(todoList))
+    {
+        printf(" tidak valid. Tugas tidak dapat dihapus.\n");
+        return 0;
+    }
+
+    // > 5 | -1 | 0
+    if ((deleteIndex > TO_DO) || (deleteIndex <= 0))
+    {
+        printf("Nomor posisi penghapusan tidak boleh.\n");
+        return 0;
+    }
+
+    todoList[deleteIndex - 1] = "";
+
+    return 0;
+}
+
+int smartCounting(string todoList[])
+{
+    // Di check semua data array, yang punya value string kosong, index tersebut bisa digunakan
+    for (int i = 0; i <= (TO_DO - 1); i++)
+    {
+        if (todoList[i] == "")
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int main()
+{
+    string todoList[TO_DO];
+
+    printf("=== Aplikasi TO DO-LIST by mister ngadimin ===\n");
+
+    while (true)
+    {
+        // Menampilkan menu
+        printf("\nMenu:\n");
+        printf("1. Tambahkan tugas baru\n");
+        printf("2. Tampilkan daftar tugas\n");
+        printf("3. Hapus tugas\n");
+        printf("4. Keluar\n");
+        printf("Pilihan Anda: ");
+
+        int choice;
+        cin >> choice;
+
+        if (choice == 1)
+        {
+            // Tambah tugas baru
+            printf("\nMasukkan tugas baru: ");
+
+            if (smartCounting(todoList) == -1)
+            {
+                printf("Slot sudah penuh, silahkan hapus salah satu! \n");
+            }
+            else
+            {
+                cin.ignore(); // Mengabaikan karakter newline
+                getline(cin, todoList[smartCounting(todoList)]);
+
+                printf("Tugas berhasil ditambahkan!\n");
+            }
+        }
+        else if (choice == 2)
+        {
+            // Tampilkan daftar tugas
+            printf("\nDaftar Tugas:\n");
+            if (IsNullTodos(todoList))
+            {
+                printf("Belum ada tugas.\n");
+            }
+            else
+            {
+                for (int i = 0; i < TO_DO; i++)
+                {
+                    cout << i + 1 << ". " << todoList[i] << "\n";
+                }
+            }
+        }
+        else if (choice == 3)
+        {
+            // Hapus tugas
+            printf("\nDaftar Tugas:\n");
+            if (IsNullTodos(todoList))
+            {
+                printf("Belum ada tugas.\n");
+            }
+            else
+            {
+                for (int i = 0; i < TO_DO; i++)
+                {
+                    cout << i + 1 << ". " << todoList[i] << "\n";
+                }
+                printf("Masukkan indeks tugas yang ingin dihapus: ");
+                int index;
+                cin >> index;
+                hapusTugas(todoList, index);
+            }
+        }
+        else if (choice == 4)
+        {
+            // Keluar dari program
+            printf("\nTerima kasih!\n");
+            break;
+        }
+        else
+        {
+            printf("\nPilihan tidak valid. Silakan coba lagi.\n");
+        }
+    }
+
+    return 0;
+}
+'''
